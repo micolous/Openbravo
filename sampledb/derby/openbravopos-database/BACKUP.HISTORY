@@ -1,0 +1,5 @@
+Fri Feb 20 00:53:58 CET 2009:Copia de seguridad iniciada para la base de datos situada en /home/adrian/openbravopos-database a /home/adrian/mybackup/openbravopos-database.
+Fri Feb 20 00:54:01 CET 2009:Se ha completado la copia de seguridad del segmento de datos a /home/adrian/mybackup/openbravopos-database/seg0. 
+Fri Feb 20 00:54:01 CET 2009:se ha copiado el directorio de anotación cronológica de /home/adrian/openbravopos-database/log a /home/adrian/mybackup/openbravopos-database/log
+Fri Feb 20 00:54:01 CET 2009:Copia de seguridad completada, instancia de anotación cronológica en (2,428427) 
+
