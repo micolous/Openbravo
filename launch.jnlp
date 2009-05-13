@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="$$codebase">
+    <information>
+        <title>Openbravo Network POS</title>
+        <vendor>Openbravo SL</vendor>
+        <homepage href="http://www.openbravo.com"/>
+        <description>Openbravo Network POS</description>
+        <description kind="short">OBN POS</description>
+    <icon href="openbravo-logo-128.png" kind="default"/>
+<offline-allowed/>
+</information>
+<security>
+<all-permissions/>
+</security>
+    <resources>
+<j2se version="1.6+"/>
+<jar eager="true" href="openbravopos.jar" main="true"/>
+<jar href="lib/axis.jar"/>
+<jar href="lib/barcode4j-light.jar"/>
+<jar href="lib/bsh-core-2.0b4.jar"/>
+<jar href="lib/commons-beanutils-1.7.jar"/>
+<jar href="lib/commons-codec-1.3.jar"/>
+<jar href="lib/commons-collections-3.1.jar"/>
+<jar href="lib/commons-digester-1.7.jar"/>
+<jar href="lib/commons-discovery-0.2.jar"/>
+<jar href="lib/commons-lang-2.1.jar"/>
+<jar href="lib/commons-logging-1.0.4.jar"/>
+<jar href="lib/itext-1.3.1.jar"/>
+<jar href="lib/jasperreports-3.0.0.jar"/>
+<jar href="lib/jaxrpc.jar"/>
+<jar href="lib/jcommon-1.0.0.jar"/>
+<jar href="lib/jdt-compiler-3.1.1.jar"/>
+<jar href="lib/jfreechart-1.0.0.jar"/>
+<jar href="lib/jpos1121.jar"/>
+<jar href="lib/oro-2.0.8.jar"/>
+<jar href="lib/poi-3.0.1-FINAL-20070705.jar"/>
+<jar href="lib/saaj.jar"/>
+<jar href="lib/substance-swingx.jar"/>
+<jar href="lib/substance.jar"/>
+<jar href="lib/swingx-0.9.5.jar"/>
+<jar href="lib/velocity-1.5.jar"/>
+<jar href="lib/wsdl4j-1.5.1.jar"/>
+<jar href="lib/derby.jar"/>
+<jar href="locales.jar"/>
+<jar href="reports.jar"/>
+<nativejar href="lib/RXTXcomm.jar"/>
+</resources>
+ <resources os="Windows">
+        <nativelib href="windows-native.jar"/>
+ </resources>
+ <resources os="SunOS" arch="sparc32">
+        <nativelib href="sparc32-native.jar"/>
+ </resources>
+ <resources os="SunOS" arch="sparc64">
+        <nativelib href="sparc64-native.jar"/>
+ </resources>
+ <resources os="Linux" arch="i686">
+        <nativelib href="linux-i686-native.jar"/>
+ </resources> 
+ <resources os="Linux" arch="ia64">
+        <nativelib href="linux-ia64-native.jar"/>
+ </resources>
+ <resources os="Linux" arch="x86_64">
+        <nativelib href="linux-x86_64-native.jar"/>
+ </resources>
+ <resources os="Mac OS X">
+        <nativelib href="osx-native.jar"/>
+ </resources>
+    <application-desc main-class="com.openbravo.pos.forms.StartPOS">
+    </application-desc>
+</jnlp>
