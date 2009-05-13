@@ -1,0 +1,16 @@
+This directory contains the files needed to build Openbravo POS for different platforms
+
+* Dir: opensuse_build_service
+
+Opensuse build service
+
+See issues with the current spec file: https://issues.openbravo.com/view.php?id=3992
+
+The %{name}-%{version}-bin.zip file is based on the regular Openbravo POS distribution. Everything is packaged in a subdirectory with the same name and includes the .desktop file.
+
+* Dir: Linux
+
+openbravopos.desktop definition file
+
+
+

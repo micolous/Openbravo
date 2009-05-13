@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Openbravo POS
+GenericName=POS system
+Comment=Openbravo POS is a point of sale application
+Exec=openbravopos %F
+Icon=openbravopos
+Type=Application
+Terminal=false
+Categories=Office;
+
