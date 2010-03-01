@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
     Openbravo POS is a point of sales application designed for touch screens.
     Copyright (C) 2007-2009 Openbravo, S.L.
     http://sourceforge.net/projects/openbravopos
@@ -41,6 +41,22 @@
         <line>
             <text align="center" length="42">Copyright 2007-2008 Openbravo, S. L.</text>
         </line>
+        <line>
+            <text align="center" length="42">RNC: 0-00-00000-0</text>
+        </line>
+        <line>
+            <text align="center" length="42">VALIDA PARA CONSUMIDOR FINAL:</text>
+        </line>
+        <line>
+            #set( $tmp = "${ticket.printNCF()}" )
+            #set( $str = $tmp )
+            #set( $tmp = $tmp.length() + 1 )
+            #foreach( $char in [$tmp..8] )
+              #set( $str = "0" + $str )
+            #end
+          <!-- This will print the NCF in appropiate format: A010010010200000000 -->
+          <text align="center" length="42">NCF: A0100100102${str}</text>
+        </line>
         <line></line>
         #if (${ticket.ticketType} == 0)
         <line>
@@ -57,36 +73,36 @@
         <line>
             <text align="left" length="15">Date:</text>
             <text>${ticket.printDate()}</text>
-        </line>  
+        </line>
          #if ($ticket.getCustomer())
         <line>
             <text align="left" length="15">Customer:</text>
             <text>${ticket.getCustomer().printName()}</text>
-        </line>      
+        </line>
         <line>
             <text align="left" length="15"></text>
             <text>${ticket.getCustomer().printTaxid()}</text>
-        </line>  
+        </line>
         #end
         #if ($place != "")
         <line>
             <text align="left" length="15">Table:</text>
             <text>${place}</text>
-        </line>  
+        </line>
         #end
-        <line></line>    
+        <line></line>
         <line>
             <text align ="left" length="17">Item</text>
             <text align ="right" length="10">Price</text>
             <text align ="right" length="5"></text>
             <text align ="right" length="10">Value</text>
-        </line>      
+        </line>
         <line>
              <text>------------------------------------------</text>
-        </line>   
+        </line>
         #foreach ($ticketline in $ticket.getLines())
         <line>
-            #if ($ticketline.isProductCom()) 
+            #if ($ticketline.isProductCom())
                 <text align ="left" length="17">*${ticketline.printName()}</text>
             #else
                 <text align ="left" length="17">${ticketline.printName()}</text>
@@ -94,130 +110,130 @@
             <text align ="right" length="10">${ticketline.printPrice()}</text>
             <text align ="right" length="5">x${ticketline.printMultiply()}</text>
             <text align ="right" length="10">${ticketline.printSubValue()}</text>
-        </line> 
+        </line>
         #if ($ticketline.productAttSetInstId)
         <line>
-	        <text align ="left" length="42">    ${ticketline.productAttSetInstDesc}</text>
+          <text align ="left" length="42">    ${ticketline.productAttSetInstDesc}</text>
         </line>
         #end
         #end
         <line>
              <text>------------------------------------------</text>
-        </line>   
+        </line>
         <line>
             <text>Items count: </text>
             <text align ="right" length="10">${ticket.printArticlesCount()}</text>
-        </line> 
-        <line></line> 
+        </line>
+        <line></line>
         <line>
             <text align ="left" length="16">Subtotal.</text>
             <text align ="right" length="20">${ticket.printSubTotal()}</text>
-        </line> 
-        <line></line> 
+        </line>
+        <line></line>
         <line size="1">
             <text align ="left" length="16" bold="true">Total.</text>
             <text align ="right" length="20" bold="true">${ticket.printTotal()}</text>
-        </line>    
-        #foreach ($paymentline in $ticket.payments)      
+        </line>
+        #foreach ($paymentline in $ticket.payments)
          #if ($paymentline.name == "cash")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Cash</text>
-        </line>  
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>     
+        </line>
          #end
          #if ($paymentline.name == "cashrefund")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Refund</text>
          </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>    
+        </line>
          #end
          #if ($paymentline.name == "magcard")
-        <line></line>        
+        <line></line>
         <line>
             <text bold="true">Mag card</text>
-        </line>   
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>  
-         #end  
+        </line>
+         #end
          #if ($paymentline.name == "magcardrefund")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Mag card refund</text>
-        </line>    
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>    
+        </line>
          #end
          #if ($paymentline.name == "cheque")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Cheque</text>
-        </line>    
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>    
+        </line>
          #end
          #if ($paymentline.name == "chequerefund")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Cheque refund</text>
-        </line>    
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>    
+        </line>
          #end
          #if ($paymentline.name == "paperin")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Note</text>
-        </line>    
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>    
+        </line>
          #end
          #if ($paymentline.name == "paperout")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Note Refund</text>
-        </line>    
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>    
+        </line>
          #end
          #if ($paymentline.name == "free")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Free</text>
-        </line>    
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>    
+        </line>
          #end
          #if ($paymentline.name == "debt")
-        <line></line>     
+        <line></line>
         <line>
             <text bold="true">Debt</text>
-        </line>    
+        </line>
         <line>
             <text align ="right" length="42">${paymentline.printTotal()}</text>
-        </line>    
-         #end 
-         #end 
-        <line></line>  
+        </line>
+         #end
+         #end
+        <line></line>
         <line>
             <text align="left" length="15">Cashier:</text>
             <text>${ticket.printUser()}</text>
-        </line> 
-        <line></line>            
+        </line>
+        <line></line>
         <line>
             <text align="center" length="42">Thank you for your visit.</text>
-        </line>    
+        </line>
     </ticket>
 </output>
