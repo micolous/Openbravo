@@ -49,6 +49,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
     private String m_sId;
     private int tickettype;
     private int m_iTicketId;
+    private int m_iTicketNCF; // NCF
     private java.util.Date m_dDate;
     private Properties attributes;
     private UserInfo m_User;
@@ -64,6 +65,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
         m_sId = UUID.randomUUID().toString();
         tickettype = RECEIPT_NORMAL;
         m_iTicketId = 0; // incrementamos
+        m_iTicketNCF = 0; // incrementamos NCF
         m_dDate = new Date();
         attributes = new Properties();
         m_User = null;
@@ -81,6 +83,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
         out.writeObject(m_sId);
         out.writeInt(tickettype);
         out.writeInt(m_iTicketId);
+        out.writeInt(m_iTicketNCF); // NCF
         out.writeObject(m_Customer);
         out.writeObject(m_dDate);
         out.writeObject(attributes);
@@ -92,6 +95,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
         m_sId = (String) in.readObject();
         tickettype = in.readInt();
         m_iTicketId = in.readInt();
+        m_iTicketNCF = in.readInt(); // NCF
         m_Customer = (CustomerInfoExt) in.readObject();
         m_dDate = (Date) in.readObject();
         attributes = (Properties) in.readObject();
@@ -118,6 +122,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
         }
         m_User = new UserInfo(dr.getString(7), dr.getString(8));
         m_Customer = new CustomerInfoExt(dr.getString(9));
+        m_iTicketNCF = dr.getInt(10).intValue(); // NCF
         m_aLines = new ArrayList<TicketLineInfo>();
 
         payments = new ArrayList<PaymentInfo>();
@@ -129,6 +134,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
 
         t.tickettype = tickettype;
         t.m_iTicketId = m_iTicketId;
+        t.m_iTicketNCF = m_iTicketNCF; // NCF
         t.m_dDate = m_dDate;
         t.m_sActiveCash = m_sActiveCash;
         t.attributes = (Properties) attributes.clone();
@@ -167,8 +173,17 @@ public class TicketInfo implements SerializableRead, Externalizable {
         return m_iTicketId;
     }
 
+    public int getTicketNCF() {
+        return m_iTicketNCF; // NCF
+    }
+
     public void setTicketId(int iTicketId) {
         m_iTicketId = iTicketId;
+    // refreshLines();
+    }
+
+    public void setTicketNCF(int iTicketNCF) {
+        m_iTicketNCF = iTicketNCF; // NCF
     // refreshLines();
     }
 
@@ -190,7 +205,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
         } else {
             name.append(info.toString());
         }
-        
+
         return name.toString();
     }
 
@@ -229,13 +244,13 @@ public class TicketInfo implements SerializableRead, Externalizable {
             return m_Customer.getId();
         }
     }
-    
+
     public String getTransactionID(){
         return (getPayments().size()>0)
             ? ( getPayments().get(getPayments().size()-1) ).getTransactionID()
             : StringUtils.getCardNumber(); //random transaction ID
     }
-    
+
     public String getReturnMessage(){
         return ( (getPayments().get(getPayments().size()-1)) instanceof PaymentInfoMagcard )
             ? ((PaymentInfoMagcard)(getPayments().get(getPayments().size()-1))).getReturnMessage()
@@ -300,7 +315,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
     public int getLinesCount() {
         return m_aLines.size();
     }
-    
+
     public double getArticlesCount() {
         double dArticles = 0.0;
         TicketLineInfo oLine;
@@ -337,7 +352,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
     }
 
     public double getTotal() {
-        
+
         return getSubTotal() + getTax();
     }
 
@@ -415,7 +430,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
             t.add(oLine.getSubValue());
         }
 
-        // return dSuma;       
+        // return dSuma;
         Collection<TicketTaxInfo> avalues = m.values();
         return avalues.toArray(new TicketTaxInfo[avalues.size()]);
     }
@@ -424,6 +439,16 @@ public class TicketInfo implements SerializableRead, Externalizable {
         if (m_iTicketId > 0) {
             // valid ticket id
             return Formats.INT.formatValue(new Integer(m_iTicketId));
+        } else {
+            return "";
+        }
+    }
+
+    public String printNCF() { // Print NCF available through: ticket.printNCF();
+        if (m_iTicketNCF > 0) {
+            // valid ticket NCF
+            // Instead of formatting send a plain integer
+            return Integer.toString(m_iTicketNCF);
         } else {
             return "";
         }

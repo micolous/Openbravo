@@ -150,7 +150,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , SerializerWriteString.INSTANCE
             , ProductInfoExt.getSerializerRead()).list(id);
     }
-  
+
     // Products list
     public final SentenceList getProductList() {
         return new StaticSentence(s
@@ -160,7 +160,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , ProductInfoExt.getSerializerRead());
     }
-    
+
     // Products list
     public SentenceList getProductListNormal() {
         return new StaticSentence(s
@@ -170,7 +170,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , ProductInfoExt.getSerializerRead());
     }
-    
+
     //Auxiliar list for a filter
     public SentenceList getProductListAuxiliar() {
          return new StaticSentence(s
@@ -180,18 +180,19 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , ProductInfoExt.getSerializerRead());
     }
-    
+
     //Tickets and Receipt list
+    // // NCF
     public SentenceList getTicketsList() {
          return new StaticSentence(s
             , new QBFBuilder(
-            "SELECT T.TICKETID, T.TICKETTYPE, R.DATENEW, P.NAME, C.NAME, SUM(PM.TOTAL) "+ 
+            "SELECT T.TICKETID, T.TICKETTYPE, R.DATENEW, P.NAME, C.NAME, SUM(PM.TOTAL), T.NCF "+
             "FROM RECEIPTS R JOIN TICKETS T ON R.ID = T.ID LEFT OUTER JOIN PAYMENTS PM ON R.ID = PM.RECEIPT LEFT OUTER JOIN CUSTOMERS C ON C.ID = T.CUSTOMER LEFT OUTER JOIN PEOPLE P ON T.PERSON = P.ID " +
             "WHERE ?(QBF_FILTER) GROUP BY T.ID, T.TICKETID, T.TICKETTYPE, R.DATENEW, P.NAME, C.NAME ORDER BY R.DATENEW DESC, T.TICKETID", new String[] {"T.TICKETID", "T.TICKETTYPE", "PM.TOTAL", "R.DATENEW", "R.DATENEW", "P.NAME", "C.NAME"})
             , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.INT, Datas.OBJECT, Datas.INT, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.TIMESTAMP, Datas.OBJECT, Datas.TIMESTAMP, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , new SerializerReadClass(FindTicketsInfo.class));
     }
-    
+
     //User list
     public final SentenceList getUserList() {
         return new StaticSentence(s
@@ -199,11 +200,11 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , null
             , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
                 return new TaxCategoryInfo(
-                        dr.getString(1), 
+                        dr.getString(1),
                         dr.getString(2));
             }});
     }
-   
+
     // Listados para combo
     public final SentenceList getTaxList() {
         return new StaticSentence(s
@@ -211,7 +212,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             , null
             , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
                 return new TaxInfo(
-                        dr.getString(1), 
+                        dr.getString(1),
                         dr.getString(2),
                         dr.getString(3),
                         dr.getString(4),
@@ -293,9 +294,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             != null;
     }
 
-    public final TicketInfo loadTicket(final int tickettype, final int ticketid) throws BasicException {
-        TicketInfo ticket = (TicketInfo) new PreparedSentence(s
-                , "SELECT T.ID, T.TICKETTYPE, T.TICKETID, R.DATENEW, R.MONEY, R.ATTRIBUTES, P.ID, P.NAME, T.CUSTOMER FROM RECEIPTS R JOIN TICKETS T ON R.ID = T.ID LEFT OUTER JOIN PEOPLE P ON T.PERSON = P.ID WHERE T.TICKETTYPE = ? AND T.TICKETID = ?"
+    public final TicketInfo loadTicket(final int tickettype, final int ticketid, final int ticketncf) throws BasicException {
+        TicketInfo ticket = (TicketInfo) new PreparedSentence(s, "SELECT T.ID, T.TICKETTYPE, T.TICKETID, R.DATENEW, R.MONEY, R.ATTRIBUTES, P.ID, P.NAME, T.CUSTOMER, T.NCF FROM RECEIPTS R JOIN TICKETS T ON R.ID = T.ID LEFT OUTER JOIN PEOPLE P ON T.PERSON = P.ID WHERE T.TICKETTYPE = ? AND T.TICKETID = ?" // T.NCF
                 , SerializerWriteParams.INSTANCE
                 , new SerializerReadClass(TicketInfo.class))
                 .find(new DataParams() { public void writeValues() throws BasicException {
@@ -309,8 +309,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                     ? null
                     : loadCustomerExt(customerid));
 
-            ticket.setLines(new PreparedSentence(s
-                , "SELECT L.TICKET, L.LINE, L.PRODUCT, L.ATTRIBUTESETINSTANCE_ID, L.UNITS, L.PRICE, T.ID, T.NAME, T.CATEGORY, T.CUSTCATEGORY, T.PARENTID, T.RATE, T.RATECASCADE, T.RATEORDER, L.ATTRIBUTES " +
+            ticket.setLines(new PreparedSentence(s,
+                  "SELECT L.TICKET, L.LINE, L.PRODUCT, L.ATTRIBUTESETINSTANCE_ID, L.UNITS, L.PRICE, T.ID, T.NAME, T.CATEGORY, T.CUSTCATEGORY, T.PARENTID, T.RATE, T.RATECASCADE, T.RATEORDER, L.ATTRIBUTES " +
                   "FROM TICKETLINES L, TAXES T WHERE L.TAXID = T.ID AND L.TICKET = ? ORDER BY L.LINE"
                 , SerializerWriteString.INSTANCE
                 , new SerializerReadClass(TicketLineInfo.class)).list(ticket.getId()));
@@ -321,6 +321,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
         }
         return ticket;
     }
+
 
     public final void saveTicket(final TicketInfo ticket, final String location) throws BasicException {
 
@@ -344,6 +345,9 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                     }
                 }
 
+                // Set Receipt NCF
+                ticket.setTicketNCF(getNextTicketNCF().intValue());
+
                 // new receipt
                 new PreparedSentence(s
                     , "INSERT INTO RECEIPTS (ID, MONEY, DATENEW, ATTRIBUTES) VALUES (?, ?, ?, ?)"
@@ -362,8 +366,9 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                     }});
 
                 // new ticket
+                // Insert NCF
                 new PreparedSentence(s
-                    , "INSERT INTO TICKETS (ID, TICKETTYPE, TICKETID, PERSON, CUSTOMER) VALUES (?, ?, ?, ?, ?)"
+                    , "INSERT INTO TICKETS (ID, TICKETTYPE, TICKETID, PERSON, CUSTOMER, NCF) VALUES (?, ?, ?, ?, ?, ?)"
                     , SerializerWriteParams.INSTANCE
                     ).exec(new DataParams() { public void writeValues() throws BasicException {
                         setString(1, ticket.getId());
@@ -371,6 +376,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                         setInt(3, ticket.getTicketId());
                         setString(4, ticket.getUser().getId());
                         setString(5, ticket.getCustomerId());
+                        setInt(6, ticket.getTicketNCF()); // ADDED FOR NCF
                     }});
 
                 SentenceExec ticketlineinsert = new PreparedSentence(s
@@ -517,6 +523,11 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 
     public final Integer getNextTicketPaymentIndex() throws BasicException {
         return (Integer) s.DB.getSequenceSentence(s, "TICKETSNUM_PAYMENT").find();
+    }
+
+    // FOR NCF SEQUENCE
+    public final Integer getNextTicketNCF() throws BasicException {
+        return (Integer) s.DB.getSequenceSentence(s, "TICKETSNUM_NCF").find();
     }
 
     public final SentenceList getProductCatQBF() {
