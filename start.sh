@@ -52,6 +52,8 @@ CP=$CP:$DIRNAME/lib/wsdl4j-1.5.1.jar
 CP=$CP:$DIRNAME/lib/commons-discovery-0.2.jar
 CP=$CP:$DIRNAME/lib/commons-logging-1.0.4.jar
 
+CP=$CP:/usr/share/java/mysql.jar
+
 CP=$CP:$DIRNAME/locales/
 CP=$CP:$DIRNAME/reports/
 
@@ -73,4 +75,4 @@ CYGWIN*|MINGW32*) LIBRARYPATH=/lib/Windows/i368-mingw32;;
 esac
 
 # start Openbravo POS
-java -cp $CP -Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel -Djava.library.path=$DIRNAME$LIBRARYPATH -Ddirname.path=$DIRNAME/ com.openbravo.pos.forms.StartPOS "$@"
+java -cp $CP -Djava.util.logging.config.file=$DIRNAME/logging.properties -Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel -Djava.library.path=$DIRNAME$LIBRARYPATH -Ddirname.path=$DIRNAME/ com.openbravo.pos.forms.StartPOS "$@"

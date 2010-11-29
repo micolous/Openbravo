@@ -27,7 +27,7 @@
     <!-- program name -->
     <property name="name" value="openbravopos"/>
     <!-- project version -->
-    <property name="version" value="2.30"/>
+    <property name="version" value="2.30.1"/>
     <!-- javac properties -->
     <property name="javac.deprecation" value="off"/>
     <property name="javac.optimize" value="on"/>
@@ -67,15 +67,15 @@
     <target name="init.jar">
         <delete dir="${dest.jar}" />
     </target>
-
+<!--
     <target name="init.war">
         <delete dir="${dest.war}" />
     </target>
-
+-->
     <target name="init.dist">
         <delete dir="${dest.dist}" />
     </target>
-
+<!--
     <target name="init.installer.pos">
         <delete dir="${dest.installer.pos}" />
     </target>
@@ -83,7 +83,7 @@
     <target name="init.installer.pda">
 	    <mkdir dir="${dest.installer.pda}" />
     </target>
-
+-->
     <!-- ================================================================= -->
     <!-- C O M P I L E                                                     -->
     <!-- ================================================================= -->
@@ -266,7 +266,7 @@
     <!-- ================================================================= -->
     <!-- C O M P I L E - P D A   M O D U L E                               -->
     <!-- ================================================================= -->
-
+<!--
     <target name="compile.pda" depends="init.classes">
         <mkdir dir="${dest.classes}/pda" />
 
@@ -289,12 +289,12 @@
             <fileset dir="${src.pda}" includes="**/*.properties"/>
         </copy>
     </target>
-
+-->
 
     <!-- ================================================================= -->
     <!-- W A R                                                            -->
     <!-- ================================================================= -->
-
+<!--
     <target name="war" depends="init.war,compile.pda" description="Generate the .war file.">
 
         <mkdir dir="${basedir}/build/zip" />
@@ -319,13 +319,13 @@
         </war>
         <delete dir="${basedir}/build/zip"/>
     </target>
-
+-->
 
     <!-- ================================================================= -->
     <!-- D I S T R I B U T I O N  F I L E S                                -->
     <!-- ================================================================= -->
     
-    <target name="dist" depends="dist.bin,dist.src,dist.pda,dist.sync" description="Generate the release files">
+    <target name="dist" depends="dist.bin,dist.src" description="Generate the release files">
     </target>
   
     <target name="dist.bin" depends="init.dist,jar" description="Generate the bin zip file.">
@@ -336,6 +336,7 @@
         <copy file="${basedir}/configure.sh" todir="${basedir}/build/zip"/>
         <copy file="${basedir}/openbravo-logo-128.png" todir="${basedir}/build/zip"/>
         <copy file="${basedir}/README" todir="${basedir}/build/zip"/>
+        <copy file="${basedir}/logging.properties" todir="${basedir}/build/zip"/>
         <copy file="${dest.jar}/openbravopos.jar" todir="${basedir}/build/zip"/>
         <copy todir="${basedir}/build/zip/licensing">
             <fileset dir="${basedir}/licensing"/>
@@ -354,7 +355,7 @@
         <zip zipfile="${dest.dist}/${name}_${version}_bin.zip" basedir="${basedir}/build/zip" />
         <delete dir="${basedir}/build/zip" />
     </target>
-
+<!--
     <target name="dist.pda" depends="init.dist,war" description="Generate de pda zip file">
         <mkdir dir="${basedir}/build/zip" />
 
@@ -372,7 +373,7 @@
         <zip zipfile="${dest.dist}/${name}_${version}_pda.zip" basedir="${basedir}/build/zip" />
         <delete dir="${basedir}/build/zip" />
     </target>
-
+-->
     <target name="dist.src" depends="init.dist" description="Generate the src zip file.">
         <mkdir dir="${basedir}/build/zip" />
 
@@ -421,20 +422,12 @@
         <copy file="${basedir}/configure.sh" todir="${basedir}/build/zip"/>
         <copy file="${basedir}/openbravo-logo-128.png" todir="${basedir}/build/zip"/>
         <copy file="${basedir}/README" todir="${basedir}/build/zip"/>
+        <copy file="${basedir}/logging.properties" todir="${basedir}/build/zip"/>
         <copy file="${basedir}/build.xml" todir="${basedir}/build/zip" />
         <copy file="${basedir}/.project" todir="${basedir}/build/zip" />
         <copy file="${basedir}/.classpath" todir="${basedir}/build/zip" />
         <copy file="${basedir}/Base diff.launch" todir="${basedir}/build/zip" />
         <copy file="${basedir}/Head diff.launch" todir="${basedir}/build/zip" />
-
-        <!-- synch -->
-        
-        <copy todir="${basedir}/build/zip/transformations">
-            <fileset dir="${basedir}/transformations"/>
-        </copy>
-        <copy todir="${basedir}/build/zip/org.openbravo.service.pos">
-            <fileset dir="${basedir}/org.openbravo.service.pos"/>
-        </copy>
 
         <!-- pda -->
 
@@ -459,37 +452,18 @@
         <delete dir="${basedir}/build/zip" />
     </target>
 
-    <target name="dist.sync" depends="init.dist" description="Create .obx module and zip all kettle transformations" >
-
-        <mkdir dir="${dest.dist}" />
-
-        <mkdir dir="${basedir}/build/transformations"/>
-        <copy todir="${basedir}/build/transformations">
-            <fileset dir="${basedir}/transformations"/>
-        </copy>
-        <zip zipfile="${dest.dist}/${name}_${version}_int.zip" basedir="${basedir}/build/transformations" />
-        <delete dir="${basedir}/build/transformations"/>
-
-        <mkdir dir="${basedir}/build/org.openbravo.service.pos"/>
-        <copy todir="${basedir}/build/org.openbravo.service.pos">
-            <fileset dir="${basedir}/org.openbravo.service.pos"/>
-        </copy>
-        <zip zipfile="${dest.dist}/${name}_${version}_web.obx" basedir="${basedir}/build/org.openbravo.service.pos"/>
-        <delete dir="${basedir}/build/org.openbravo.service.pos" />
-    </target>
-
     <!-- ================================================================= -->
     <!-- I N S T A L L E R S                                               -->
     <!-- ================================================================= -->
-
+<!--
     <target name="installer" depends="installer.pos" 
 			description="Generate installers of POS for all predefined platforms">	
     </target>
-
+-->
     <!-- ================================================================= -->
     <!-- I N S T A L L E R S   P O S                                       -->
     <!-- ================================================================= -->
-
+<!--
     <target name="installer.pos" depends="installer.pos.linux, installer.pos.linux-x64, installer.pos.linux-ia64, installer.pos.windows, installer.pos.osx, installer.pos.solaris-intel"
 			description="Generate installers for all predefined platforms">
     </target>
@@ -537,11 +511,11 @@
     	</exec> 
     </target>
 
-   
+   -->
     <!-- ================================================================= -->
     <!-- J W S                                     			   -->
     <!-- ================================================================= -->
-
+<!--
    <target name="jws" depends="copy-libraries-up, sign-jars"/>	
 
    <target name="keystore">
@@ -604,5 +578,5 @@
         <copy file="${basedir}/launch.jnlp" 
 	      todir="${dest.dist}/jws"/>
    </target>
-
+-->
 </project>

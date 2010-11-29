@@ -45,6 +45,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
     private Properties attributes;
     private String productid;
     private String attsetinstid;
+    private ProductInfoExt productInfo;
 
     /** Creates new TicketLineInfo */
     public TicketLineInfo(String productid, double dMultiply, double dPrice, TaxInfo tax, Properties props) {
@@ -75,9 +76,9 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
     }
 
     public TicketLineInfo(ProductInfoExt product, double dMultiply, double dPrice, TaxInfo tax, Properties attributes) {
-
         String pid;
 
+				this.productInfo = product;
         if (product == null) {
             pid = null;
         } else {
@@ -115,7 +116,10 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
         m_sTicket = null;
         m_iLine = -1;
     }
-
+		public ProductInfoExt getProductInfo() {
+			return this.productInfo;
+		}
+		
     void setTicket(String ticket, int line) {
         m_sTicket = ticket;
         m_iLine = line;
@@ -149,7 +153,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
         multiply = dr.getDouble(5);
         price = dr.getDouble(6);
 
-        tax = new TaxInfo(dr.getString(7), dr.getString(8), dr.getString(9), dr.getString(10), dr.getString(11), dr.getDouble(12), dr.getBoolean(13), dr.getInt(14));
+        tax = new TaxInfo(dr.getString(7), dr.getString(8), dr.getString(9), dr.getTimestamp(10), dr.getString(11), dr.getString(12), dr.getDouble(13), dr.getBoolean(14), dr.getInt(15));
         attributes = new Properties();
         try {
             byte[] img = dr.getBytes(15);

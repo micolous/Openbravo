@@ -86,35 +86,36 @@ public class PaymentGatewayPGNET implements PaymentGateway {
             String amount = formatter.format(Math.abs(payinfo.getTotal()));
             sb.append(URLEncoder.encode(amount.replace(',', '.'), "UTF-8"));
             
-            sb.append("&ecom_payment_card_type=");
-            sb.append(getCardType(payinfo.getCardNumber()));
-            
-            sb.append("&ecom_payment_card_number=");
-            sb.append(URLEncoder.encode(payinfo.getCardNumber(), "UTF-8"));
-                
-            sb.append("&ecom_payment_card_expdate_month=");
-            String tmp = payinfo.getExpirationDate();
-            sb.append(tmp.substring(0, 2));
-            
-            sb.append("&ecom_payment_card_expdate_year=");
-            sb.append(tmp.substring(2, tmp.length()));
-             
-            String[] cc_name = payinfo.getHolderName().split(" ");
-            sb.append("&ecom_billto_postal_name_first=");
-            if (cc_name.length > 0) {
-                sb.append(URLEncoder.encode(cc_name[0], "UTF-8"));
-            }
-            sb.append("&ecom_billto_postal_name_last=");
-            if (cc_name.length > 1) {
-                sb.append(URLEncoder.encode(cc_name[1], "UTF-8"));
-            }
-
-            sb.append("&ecom_payment_card_name=");
-            sb.append(payinfo.getHolderName());
-            
             if (payinfo.getTrack1(true) != null){
                 sb.append("&pg_cc_swipe_data=");
                 sb.append(URLEncoder.encode(payinfo.getTrack1(true), "UTF-8"));
+                
+            } else {
+                sb.append("&ecom_payment_card_type=");
+                sb.append(getCardType(payinfo.getCardNumber()));
+
+                sb.append("&ecom_payment_card_number=");
+                sb.append(URLEncoder.encode(payinfo.getCardNumber(), "UTF-8"));
+
+                sb.append("&ecom_payment_card_expdate_month=");
+                String tmp = payinfo.getExpirationDate();
+                sb.append(tmp.substring(0, 2));
+
+                sb.append("&ecom_payment_card_expdate_year=");
+                sb.append(tmp.substring(2, tmp.length()));
+
+                String[] cc_name = payinfo.getHolderName().split(" ");
+                sb.append("&ecom_billto_postal_name_first=");
+                if (cc_name.length > 0) {
+                sb.append(URLEncoder.encode(cc_name[0], "UTF-8"));
+                }
+                sb.append("&ecom_billto_postal_name_last=");
+                if (cc_name.length > 1) {
+                sb.append(URLEncoder.encode(cc_name[1], "UTF-8"));
+                }
+
+                sb.append("&ecom_payment_card_name=");
+                sb.append(payinfo.getHolderName());
             }
             //sb.append("&ecom_payment_card_verification=");
             

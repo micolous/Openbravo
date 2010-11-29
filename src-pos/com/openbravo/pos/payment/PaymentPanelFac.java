@@ -35,6 +35,8 @@ public class PaymentPanelFac {
             return new PaymentPanelMagCard(new MagCardReaderIntelligent(), notifier);
         } else if ("Generic".equals(sReader)) {
             return new PaymentPanelMagCard(new MagCardReaderGeneric(), notifier);
+        } else if ("Alternative".equals(sReader)) {
+            return new PaymentPanelMagCard(new MagCardReaderAlternative(), notifier);
         } else if ("Keyboard".equals(sReader)) {
             return new PaymentPanelType(notifier);
         } else { // "Not defined

@@ -21,6 +21,7 @@ package com.openbravo.pos.ticket;
 
 import java.io.Serializable;
 import com.openbravo.data.loader.IKeyed;
+import java.util.Date;
 
 /**
  *
@@ -32,6 +33,7 @@ public class TaxInfo implements Serializable, IKeyed {
     private String id;
     private String name;
     private String taxcategoryid;
+    private Date validfrom;
     private String taxcustcategoryid;
     private String parentid;
     
@@ -40,10 +42,11 @@ public class TaxInfo implements Serializable, IKeyed {
     private Integer order;
     
     /** Creates new TaxInfo */
-    public TaxInfo(String id, String name, String taxcategoryid, String taxcustcategoryid, String parentid, double rate, boolean cascade, Integer order) {
+    public TaxInfo(String id, String name, String taxcategoryid, Date validfrom, String taxcustcategoryid, String parentid, double rate, boolean cascade, Integer order) {
         this.id = id;
         this.name = name;
         this.taxcategoryid = taxcategoryid;
+        this.validfrom = validfrom;
         this.taxcustcategoryid = taxcustcategoryid;
         this.parentid = parentid;
         
@@ -78,6 +81,10 @@ public class TaxInfo implements Serializable, IKeyed {
     
     public void setTaxCategoryID(String value) {
         taxcategoryid = value;
+    }
+
+    public Date getValidFrom() {
+        return validfrom;
     }
 
     public String getTaxCustCategoryID() {

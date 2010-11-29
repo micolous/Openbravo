@@ -26,6 +26,7 @@ import com.openbravo.data.loader.*;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
+import com.openbravo.pos.util.StringUtils;
 
 /**
  *
@@ -181,7 +182,7 @@ public class PaymentsModel {
     }
     
     public String printHost() {
-        return m_sHost;
+        return StringUtils.encodeXML(m_sHost);
     }
     public String printSequence() {
         return Formats.INT.formatValue(m_iSeq);

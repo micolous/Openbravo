@@ -28,14 +28,15 @@
     <class name="sales.PrintTicket"/>
     <class name="sales.Total"/>
     <class name="payment.cash"/>
-    <class name="payment.cheque"/>
+    <class name="payment.debt"/>
+<!--    <class name="payment.cheque"/>
     <class name="payment.paper"/>
     <class name="payment.magcard"/>
-    <class name="payment.free"/>
+    <class name="payment.free"/> -->
     <class name="refund.cash"/>
-    <class name="refund.cheque"/>
+<!--    <class name="refund.cheque"/>
     <class name="refund.paper"/>
-    <class name="refund.magcard"/>
+    <class name="refund.magcard"/> -->
     <class name="Menu.ChangePassword"/>
     <class name="button.print"/>
 </permissions>

@@ -21,25 +21,14 @@ package com.openbravo.pos.printer.ticket;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class BasicTicket implements PrintItem {
-
-    protected static Font BASEFONT;
-    protected static int FONTHEIGHT;
-    protected static double IMAGE_SCALE;
+public abstract class BasicTicket implements PrintItem {
 
     protected java.util.List<PrintItem> m_aCommands;
     protected PrintItemLine pil;
     protected int m_iBodyHeight;
-
-    static {
-        BASEFONT = new Font("Monospaced", Font.PLAIN, 12).deriveFont(AffineTransform.getScaleInstance(1.0, 1.40));
-        FONTHEIGHT = 20;
-        IMAGE_SCALE = 1.0;
-    }
 
     /** Creates a new instance of AbstractTicket */
     public BasicTicket() {
@@ -47,6 +36,12 @@ public class BasicTicket implements PrintItem {
         pil = null;
         m_iBodyHeight = 0;
     }
+
+    protected abstract Font getBaseFont();
+
+    protected abstract int getFontHeight();
+
+    protected abstract double getImageScale();
 
     public int getHeight() {
         return m_iBodyHeight;
@@ -68,20 +63,20 @@ public class BasicTicket implements PrintItem {
     // INTERFAZ PRINTER 2
     public void printImage(BufferedImage image) {
 
-        PrintItem pi = new PrintItemImage(image, IMAGE_SCALE);
+        PrintItem pi = new PrintItemImage(image, getImageScale());
         m_aCommands.add(pi);
         m_iBodyHeight += pi.getHeight();
     }
 
     public void printBarCode(String type, String position, String code) {
 
-        PrintItem pi = new PrintItemBarcode(type, position, code, IMAGE_SCALE);
+        PrintItem pi = new PrintItemBarcode(type, position, code, getImageScale());
         m_aCommands.add(pi);
         m_iBodyHeight += pi.getHeight();
     }
 
     public void beginLine(int iTextSize) {
-        pil = new PrintItemLine(iTextSize, BASEFONT, FONTHEIGHT);
+        pil = new PrintItemLine(iTextSize, getBaseFont(), getFontHeight());
     }
 
     public void printText(int iStyle, String sText) {

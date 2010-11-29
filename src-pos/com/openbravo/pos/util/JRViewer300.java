@@ -1137,8 +1137,7 @@ public class JRViewer300 extends javax.swing.JPanel implements JRHyperlinkListen
 	{//GEN-HEADEREND:event_btnPrintActionPerformed
 		// Add your handling code here:
 
-		Thread thread =
-			new Thread(
+            SwingUtilities.invokeLater(
 				new Runnable()
 				{
 					public void run()
@@ -1164,7 +1163,6 @@ public class JRViewer300 extends javax.swing.JPanel implements JRHyperlinkListen
 				}
 			);
 
-		thread.start();
 
 	}//GEN-LAST:event_btnPrintActionPerformed
 

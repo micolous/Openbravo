@@ -57,7 +57,7 @@ public class JPanelConfigPayment extends javax.swing.JPanel implements PanelConf
         initPayments("external", new ConfigPaymentPanelEmpty());
         initPayments("PayPoint / SecPay", new ConfigPaymentPanelGeneric());
         initPayments("AuthorizeNet", new ConfigPaymentPanelGeneric());
-        initPayments("Cyberauthorize", new ConfigPaymentPanelGeneric());
+        initPayments("Planetauthorize", new ConfigPaymentPanelGeneric());
         initPayments("Firs Data / LinkPoint / YourPay", new ConfigPaymentPanelLinkPoint());
         initPayments("PaymentsGateway.net", new ConfigPaymentPanelGeneric());
         initPayments("La Caixa (Spain)", new ConfigPaymentPanelCaixa());
@@ -65,6 +65,7 @@ public class JPanelConfigPayment extends javax.swing.JPanel implements PanelConf
         // Lector de tarjetas.
         jcboCardReader.addItem("Not defined");
         jcboCardReader.addItem("Generic");
+        jcboCardReader.addItem("Alternative");
         jcboCardReader.addItem("Intelligent");
         jcboCardReader.addItem("Keyboard");
     }

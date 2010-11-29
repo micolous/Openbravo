@@ -99,7 +99,7 @@ public class ExternalSalesHelper {
             // 2.40 service
             return externalCustomers.getCustomers(m_iERPId, m_sERPUser, m_sERPPassword);
         } catch (RemoteException e) {
-            // 2.35 service not exists
+            // 2.30 service not exists
             return new Customer[0];
         }             
     }
@@ -109,7 +109,7 @@ public class ExternalSalesHelper {
             // 2.40 service
             return externalSales.getProductsPlusCatalog(m_iERPId, m_iERPOrg, m_iERPPos, m_sERPUser, m_sERPPassword);
         } catch (RemoteException e) {
-            // 2.35 service
+            // 2.30 service
             return externalSales.getProductsCatalog(m_iERPId, m_iERPOrg, m_iERPPos, m_sERPUser, m_sERPPassword);
         }        
     }

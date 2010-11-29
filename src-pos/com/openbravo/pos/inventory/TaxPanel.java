@@ -69,12 +69,12 @@ public class TaxPanel extends JPanelTable {
     
     @Override
     public Vectorer getVectorer() {
-        return ttaxes.getVectorerBasic(new int[]{1, 5, 7});
+        return ttaxes.getVectorerBasic(new int[]{1, 6, 8});
     }
     
     @Override
     public ComparatorCreator getComparatorCreator() {
-        return ttaxes.getComparatorCreator(new int[] {1, 5, 7});
+        return ttaxes.getComparatorCreator(new int[] {1, 6, 8});
     }
     
     @Override

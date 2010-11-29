@@ -1,5 +1,5 @@
 --    Openbravo POS is a point of sales application designed for touch screens.
---    Copyright (C) 2008-2009 Openbravo, S.L.
+--    Copyright (C) 2008-2010 Openbravo, S.L.
 --    http://sourceforge.net/projects/openbravopos
 --
 --    This file is part of Openbravo POS.
@@ -178,6 +178,10 @@ ALTER TABLE PRODUCTS ALTER COLUMN ISCOM SET DEFAULT FALSE;
 ALTER TABLE PRODUCTS ALTER COLUMN ISSCALE SET DEFAULT FALSE;
 ALTER TABLE TAXES ALTER COLUMN RATECASCADE SET DEFAULT FALSE;
 ALTER TABLE CUSTOMERS ALTER COLUMN VISIBLE SET DEFAULT TRUE;
+
+-- v2.30 - v2.30.1
+
+ALTER TABLE TAXES ADD COLUMN VALIDFROM TIMESTAMP DEFAULT '2001-01-01 00:00:00' NOT NULL;
 
 -- final script
 

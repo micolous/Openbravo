@@ -44,10 +44,10 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
         m_sentcat = dlSales.getCategoriesList();
         m_CategoryModel = new ComboBoxValModel();           
         
-        m_jCboPriceBuy.setModel(new ListQBFModelNumber());
+        m_jCboPriceBuy.setModel(ListQBFModelNumber.getMandatoryNumber());
         m_jPriceBuy.addEditorKeys(jKeys);
         
-        m_jCboPriceSell.setModel(new ListQBFModelNumber());
+        m_jCboPriceSell.setModel(ListQBFModelNumber.getMandatoryNumber());
         m_jPriceSell.addEditorKeys(jKeys);
         
         m_jtxtName.addEditorKeys(jKeys);
@@ -142,29 +142,29 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
 
         jLabel5.setText(AppLocal.getIntString("label.prodname")); // NOI18N
         add(jLabel5);
-        jLabel5.setBounds(20, 40, 110, 14);
+        jLabel5.setBounds(20, 40, 110, 15);
         add(m_jtxtName);
         m_jtxtName.setBounds(130, 40, 290, 25);
 
         jLabel2.setText(AppLocal.getIntString("label.prodcategory")); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(20, 70, 110, 14);
+        jLabel2.setBounds(20, 70, 110, 15);
         add(m_jCategory);
-        m_jCategory.setBounds(130, 70, 260, 25);
+        m_jCategory.setBounds(130, 70, 260, 24);
 
         jLabel4.setText(AppLocal.getIntString("label.prodpricebuy")); // NOI18N
         add(jLabel4);
-        jLabel4.setBounds(20, 100, 110, 14);
+        jLabel4.setBounds(20, 100, 110, 15);
         add(m_jCboPriceBuy);
-        m_jCboPriceBuy.setBounds(130, 100, 150, 20);
+        m_jCboPriceBuy.setBounds(130, 100, 150, 24);
         add(m_jPriceBuy);
         m_jPriceBuy.setBounds(290, 100, 130, 25);
 
         jLabel3.setText(AppLocal.getIntString("label.prodpricesell")); // NOI18N
         add(jLabel3);
-        jLabel3.setBounds(20, 130, 110, 14);
+        jLabel3.setBounds(20, 130, 110, 15);
         add(m_jCboPriceSell);
-        m_jCboPriceSell.setBounds(130, 130, 150, 20);
+        m_jCboPriceSell.setBounds(130, 130, 150, 24);
         add(m_jPriceSell);
         m_jPriceSell.setBounds(290, 130, 130, 25);
         add(m_jtxtBarCode);
@@ -172,7 +172,7 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
 
         jLabel1.setText(AppLocal.getIntString("label.prodbarcode")); // NOI18N
         add(jLabel1);
-        jLabel1.setBounds(20, 10, 110, 14);
+        jLabel1.setBounds(20, 10, 110, 15);
     }// </editor-fold>//GEN-END:initComponents
     
     

@@ -9,6 +9,7 @@
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
@@ -55,7 +56,7 @@
     <Component class="javax.swing.JComboBox" name="m_jCategory">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="130" y="70" width="260" height="25"/>
+          <AbsoluteConstraints x="130" y="70" width="260" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -74,7 +75,7 @@
     <Component class="javax.swing.JComboBox" name="m_jCboPriceBuy">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="130" y="100" width="150" height="20"/>
+          <AbsoluteConstraints x="130" y="100" width="150" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -100,7 +101,7 @@
     <Component class="javax.swing.JComboBox" name="m_jCboPriceSell">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="130" y="130" width="150" height="20"/>
+          <AbsoluteConstraints x="130" y="130" width="150" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

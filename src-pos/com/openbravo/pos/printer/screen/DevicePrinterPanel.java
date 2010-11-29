@@ -25,6 +25,7 @@ import java.awt.image.BufferedImage;
 import com.openbravo.pos.printer.*;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.printer.ticket.BasicTicket;
+import com.openbravo.pos.printer.ticket.BasicTicketForScreen;
 
 public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrinter {
     
@@ -62,7 +63,7 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
     
     // INTERFAZ PRINTER 2
     public void beginReceipt() {
-        m_ticketcurrent = new BasicTicket();
+        m_ticketcurrent = new BasicTicketForScreen();
     }
     public void printImage(BufferedImage image) {
         m_ticketcurrent.printImage(image);

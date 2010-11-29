@@ -31,6 +31,7 @@ import com.openbravo.data.loader.LocalRes;
 import com.openbravo.pos.customers.CustomerInfoExt;
 import com.openbravo.pos.payment.PaymentInfoMagcard;
 import com.openbravo.pos.util.StringUtils;
+//import com.openbravo.pos.forms.DataLogicSales;
 
 /**
  *
@@ -219,7 +220,32 @@ public class TicketInfo implements SerializableRead, Externalizable {
     }
 
     public void setCustomer(CustomerInfoExt value) {
+    		CustomerInfoExt oldValue = m_Customer;
         m_Customer = value;
+        
+        
+        // recalculate stuff so that they are charged at the "buy price" if
+        // they are a customer, otherwise at the normal sale price
+        
+        // only run if we've gone from having a customer to not, or vice versa.
+        if ((oldValue != null && value == null) || (oldValue == null && value != null)) {
+        
+		      for (TicketLineInfo line : m_aLines) {
+		      	if (line.getProductInfo() != null) {
+		      		ProductInfoExt prodinfo = line.getProductInfo();
+		      									
+			      	if (line.getPrice() == (oldValue == null ? prodinfo.getPriceSell() : prodinfo.getPriceBuy())) {
+			      		// price has not been overridden.
+			      		// continue with update
+			      		System.out.print("Updating price, was " + line.printPrice() + " now ");
+			      		line.setPrice(value == null ? prodinfo.getPriceSell() : prodinfo.getPriceBuy());
+			      		System.out.println(line.printPrice());
+			      	}
+			      }
+			    }
+			  }
+        
+        
     }
 
     public String getCustomerId() {

@@ -29,19 +29,20 @@
     <class name="sales.EditLines"/>
     <class name="sales.EditTicket"/>
     <class name="sales.RefundTicket"/>
-    <class name="sales.PrintTicket"/>
+<!--     <class name="sales.PrintTicket"/> -->
     <class name="sales.Total"/>
     <!-- <class name="sales.ChangeTaxOptions"/> -->
+
     <class name="payment.cash"/>
-    <class name="payment.cheque"/>
+    <!--    <class name="payment.cheque"/>
     <class name="payment.paper"/>
     <class name="payment.magcard"/>
-    <class name="payment.free"/>
+    <class name="payment.free"/> -->
     <class name="payment.debt"/>
     <class name="refund.cash"/>
-    <class name="refund.cheque"/>
+<!--    <class name="refund.cheque"/>
     <class name="refund.paper"/>
-    <class name="refund.magcard"/>
+    <class name="refund.magcard"/> -->
     <class name="com.openbravo.pos.forms.MenuCustomers"/>
     <class name="com.openbravo.pos.customers.CustomersPanel"/>
     <class name="/com/openbravo/reports/customers.bs"/>

@@ -94,6 +94,7 @@ public class ProductsSync implements ProcessAction {
                             product.getTax().getId(),
                             product.getTax().getName(),
                             tc.getID(),
+                            new Date(Long.MIN_VALUE),
                             null,
                             null,
                             product.getTax().getPercentage() / 100,

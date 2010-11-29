@@ -20,108 +20,30 @@
 package com.openbravo.pos.payment;
 
 public class MagCardReaderIntelligent implements MagCardReader {
-    
-    private String m_sHolderName;
-    private String m_sCardNumber;
-    private String m_sExpirationDate;
-    
-    private StringBuffer m_sField;
-    
-    private static final int READING_HOLDER = 0;
-    private static final int READING_NUMBER = 1;
-    private static final int READING_DATE = 2;
-    private static final int READING_FINISHED = 3;
-    private int m_iAutomState;
+
+    private MagCardParser magcardparser;
             
     /** Creates a new instance of BasicMagCardReader */
     public MagCardReaderIntelligent() {
-        reset();
+        magcardparser = new MagCardParserIntelligent();
     }
  
+    @Override
     public String getReaderName() {
         return "Basic magnetic card reader";
     }
-    
-    public void reset() {
-        m_sHolderName = null;
-        m_sCardNumber = null;
-        m_sExpirationDate = null;
-        m_sField = new StringBuffer();
-        m_iAutomState = READING_HOLDER;
+    @Override
+    public void keyPressed(java.awt.event.KeyEvent evt) {
     }
-    
-    public void appendChar(char c) {
-       
-        switch (m_iAutomState) {
-            case READING_HOLDER:
-            case READING_FINISHED:
-                if (c == 0x0009) {
-                    m_sHolderName = m_sField.toString();
-                    m_sField = new StringBuffer();
-                    m_iAutomState = READING_NUMBER;
-                } else if (c == 0x000A) {
-                    m_sHolderName = null;
-                    m_sCardNumber = null;
-                    m_sExpirationDate = null;
-                    m_sField = new StringBuffer();
-                    m_iAutomState = READING_HOLDER;
-                } else {
-                    m_sField.append(c);
-                    m_iAutomState = READING_HOLDER;
-                }
-                break;
-            case READING_NUMBER:
-                if (c == 0x0009) {
-                    m_sCardNumber = m_sField.toString();
-                    m_sField = new StringBuffer();
-                    m_iAutomState = READING_DATE;
-                } else if (c == 0x000A) {
-                    m_sHolderName = null;
-                    m_sCardNumber = null;
-                    m_sExpirationDate = null;
-                    m_sField = new StringBuffer();
-                    m_iAutomState = READING_HOLDER;
-                } else {
-                    m_sField.append(c);
-                }
-                break;                
-            case READING_DATE:
-                if (c == 0x0009) {
-                    m_sHolderName = m_sCardNumber;
-                    m_sCardNumber = m_sExpirationDate;
-                    m_sExpirationDate = null;
-                    m_sField = new StringBuffer();
-                } else if (c == 0x000A) {
-                    m_sExpirationDate = m_sField.toString();
-                    m_sField = new StringBuffer();
-                    m_iAutomState = READING_FINISHED;
-                } else {
-                    m_sField.append(c);
-                }
-                break;  
-        }
+    @Override
+    public void keyReleased(java.awt.event.KeyEvent evt) {
     }
-    
-    public boolean isComplete() {
-        return m_iAutomState == READING_FINISHED;
+    @Override
+    public void keyTyped(java.awt.event.KeyEvent evt) {
+        magcardparser.append(evt.getKeyChar());
     }
-    
-    public String getHolderName() {
-        return m_sHolderName;
+    @Override
+    public MagCardParser getMagCard() {
+        return magcardparser;
     }
-    public String getCardNumber() {
-        return m_sCardNumber;
-    }
-    public String getExpirationDate() {
-        return m_sExpirationDate;
-    }
-    public String getTrack1() {
-        return null;
-    }
-    public String getTrack2() {
-        return null;
-    }    
-    public String getTrack3() {
-        return null;
-    }       
 }

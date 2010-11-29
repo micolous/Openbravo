@@ -130,7 +130,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
                     AppLocal.getIntString("label.refunds"), AppLocal.getIntString("label.all")};
         jComboBoxTicket.setModel(new DefaultComboBoxModel(values));
         
-        jcboMoney.setModel(new ListQBFModelNumber());
+        jcboMoney.setModel(ListQBFModelNumber.getMandatoryNumber());
         
         m_sentcat = dlSales.getUserList();
         m_CategoryModel = new ComboBoxValModel(); 

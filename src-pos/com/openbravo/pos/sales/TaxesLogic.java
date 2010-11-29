@@ -28,6 +28,7 @@ import com.openbravo.pos.ticket.TicketTaxInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,29 +181,29 @@ public class TaxesLogic {
         return null;
     }
     
-    public double getTaxRate(String tcid) {
-        return getTaxRate(tcid, null);
+    public double getTaxRate(String tcid, Date date) {
+        return getTaxRate(tcid, date, null);
     }
     
-    public double getTaxRate(TaxCategoryInfo tc) {
-        return getTaxRate(tc, null);
+    public double getTaxRate(TaxCategoryInfo tc, Date date) {
+        return getTaxRate(tc, date, null);
     }
     
-    public double getTaxRate(TaxCategoryInfo tc, CustomerInfoExt customer) {
+    public double getTaxRate(TaxCategoryInfo tc, Date date, CustomerInfoExt customer) {
         
         if (tc == null) {
             return 0.0;
         } else {
-            return getTaxRate(tc.getID(), customer);          
+            return getTaxRate(tc.getID(), date, customer);
         }
     }
     
-    public double getTaxRate(String tcid, CustomerInfoExt customer) {
+    public double getTaxRate(String tcid, Date date, CustomerInfoExt customer) {
         
         if (tcid == null) {
             return 0.0;
         } else {
-            TaxInfo tax = getTaxInfo(tcid, customer);
+            TaxInfo tax = getTaxInfo(tcid, date, customer);
             if (tax == null) {
                 return 0.0;
             } else {
@@ -211,38 +212,44 @@ public class TaxesLogic {
         }
     }
     
-    public TaxInfo getTaxInfo(String tcid) {
-        return getTaxInfo(tcid, null);
+    public TaxInfo getTaxInfo(String tcid, Date date) {
+        return getTaxInfo(tcid, date, null);
     }
     
-    public TaxInfo getTaxInfo(TaxCategoryInfo tc) {
-        return getTaxInfo(tc.getID(), null);
+    public TaxInfo getTaxInfo(TaxCategoryInfo tc, Date date) {
+        return getTaxInfo(tc.getID(), date, null);
     }
     
-    public TaxInfo getTaxInfo(TaxCategoryInfo tc, CustomerInfoExt customer) {  
-        return getTaxInfo(tc.getID(), customer);
+    public TaxInfo getTaxInfo(TaxCategoryInfo tc, Date date, CustomerInfoExt customer) {
+        return getTaxInfo(tc.getID(), date, customer);
     }    
     
-    public TaxInfo getTaxInfo(String tcid, CustomerInfoExt customer) {
+    public TaxInfo getTaxInfo(String tcid, Date date, CustomerInfoExt customer) {
         
-        
+        TaxInfo candidatetax = null;
         TaxInfo defaulttax = null;
         
         for (TaxInfo tax : taxlist) {
-            if (tax.getParentID() == null && tax.getTaxCategoryID().equals(tcid)) {
-                if ((customer == null || customer.getTaxCustCategoryID() == null) && tax.getTaxCustCategoryID() == null) {
-                    return tax;
-                } else if (customer != null && customer.getTaxCustCategoryID() != null && customer.getTaxCustCategoryID().equals(tax.getTaxCustCategoryID())) {
-                    return tax;
+            if (tax.getParentID() == null && tax.getTaxCategoryID().equals(tcid) && tax.getValidFrom().compareTo(date) <= 0) {
+
+
+                if (candidatetax == null || tax.getValidFrom().compareTo(candidatetax.getValidFrom()) > 0) {
+                    // is valid date
+                    if ((customer == null || customer.getTaxCustCategoryID() == null) && tax.getTaxCustCategoryID() == null) {
+                        candidatetax = tax;
+                    } else if (customer != null && customer.getTaxCustCategoryID() != null && customer.getTaxCustCategoryID().equals(tax.getTaxCustCategoryID())) {
+                        candidatetax = tax;
+                    }
                 }
                 
                 if (tax.getTaxCustCategoryID() == null) {
-                    defaulttax = tax;
+                    if (defaulttax == null || tax.getValidFrom().compareTo(defaulttax.getValidFrom()) > 0) {
+                        defaulttax = tax;
+                    }
                 }
             }
         }
-        
-        // No tax found
-        return defaulttax;
+
+        return candidatetax == null ? defaulttax : candidatetax;
     }
 }

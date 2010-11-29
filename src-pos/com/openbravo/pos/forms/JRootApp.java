@@ -606,8 +606,9 @@ public class JRootApp extends JPanel implements AppView {
 
         jLabel2.setPreferredSize(new java.awt.Dimension(142, 34));
         m_jPanelTitle.add(jLabel2, java.awt.BorderLayout.LINE_START);
-
-        add(m_jPanelTitle, java.awt.BorderLayout.NORTH);
+        
+				// hide the bar at the top to save screen space - we really don't need it.
+        //add(m_jPanelTitle, java.awt.BorderLayout.NORTH);
 
         m_jPanelContainer.setLayout(new java.awt.CardLayout());
 

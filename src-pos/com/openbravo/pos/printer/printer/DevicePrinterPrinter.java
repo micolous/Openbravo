@@ -26,6 +26,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import com.openbravo.pos.printer.DevicePrinter;
+import com.openbravo.pos.printer.ticket.BasicTicket;
 import com.openbravo.pos.printer.ticket.BasicTicketForPrinter;
 import com.openbravo.pos.util.ReportUtils;
 import com.openbravo.pos.util.SelectPrinter;
@@ -64,7 +65,7 @@ public class DevicePrinterPrinter implements DevicePrinter {
     /*name of a printer*/
     private String m_sName;
     /*a ticket to print*/
-    private BasicTicketForPrinter m_ticketcurrent;
+    private BasicTicket m_ticketcurrent;
     /*system printer*/
     private PrintService printservice;
 

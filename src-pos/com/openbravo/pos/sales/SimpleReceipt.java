@@ -87,7 +87,7 @@ public class SimpleReceipt extends javax.swing.JPanel {
     private void refreshTicketTaxes() {
         
         for (TicketLineInfo line : ticket.getLines()) {
-            line.setTaxInfo(taxeslogic.getTaxInfo(line.getProductTaxCategoryID(), ticket.getCustomer()));
+            line.setTaxInfo(taxeslogic.getTaxInfo(line.getProductTaxCategoryID(),  ticket.getDate(), ticket.getCustomer()));
         }
     }
     

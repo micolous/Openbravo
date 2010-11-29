@@ -39,8 +39,8 @@ public class PaymentGatewayFac {
             return new PaymentGatewayAuthorizeNet(props);
         } else if ("La Caixa (Spain)".equals(sReader)) {
             return new PaymentGatewayCaixa(props);
-        } else if ("Cyberauthorize".equals(sReader)) {
-            return new PaymentGatewayCyberauthorize(props);
+        } else if ("Planetauthorize".equals(sReader)) {
+            return new PaymentGatewayPlanetauthorize(props);
         } else if ("Firs Data / LinkPoint / YourPay".equals(sReader)) {
             return new PaymentGatewayLinkPoint(props);
         } else if ("PaymentsGateway.net".equals(sReader)) {

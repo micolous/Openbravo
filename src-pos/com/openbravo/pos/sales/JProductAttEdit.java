@@ -138,7 +138,7 @@ public class JProductAttEdit extends javax.swing.JDialog {
     public void editAttributes(String attsetid, String attsetinstid) throws BasicException {
 
         if (attsetid == null) {
-            throw new BasicException(AppLocal.getIntString("message.attsetnotexists"));
+            throw new BasicException(AppLocal.getIntString("message.cannotfindattributes"));
         } else {
 
             this.attsetid = attsetid;
@@ -151,7 +151,7 @@ public class JProductAttEdit extends javax.swing.JDialog {
             AttributeSetInfo asi = (AttributeSetInfo) attsetSent.find(attsetid);
 
             if (asi == null) {
-                throw new BasicException(AppLocal.getIntString("message.attsetnotexists"));
+                throw new BasicException(AppLocal.getIntString("message.cannotfindattributes"));
             }
 
             setTitle(asi.getName());
