@@ -1,6 +1,19 @@
-== Openbravo POS 2.30.1  ==
+== Openbravo POS 2.30.1+micolous1  ==
 
 Openbravo POS is a point of sale application designed for touch screens, supports ESC/POS ticket printers, customer displays and barcode scanners. It is multiuser providing product entry forms, reports and charts.
+
+=== Special notes about this version ===
+
+This version includes the following extra modifications:
+
+* Australian currency is used by default.  This was included from an existing modification.
+* Minor UI change to remove the bar from the top of the screen that wastes screen real estate.
+* Made it so that the "Buy Price" is used for registered customers.  This can be used to implement a customer discount system that isn't a static percentage, and is instead implemented on a per-product basis.
+
+These modifications were developed for a community event in Adelaide, but they don't use this software anymore, and I'm not involved with their event anymore.  It is being released to the public in the hope it will be useful.
+
+=== OpenBravo's project notes ===
+
 
 You can read the release notes of this version in the following link http://wiki.openbravo.com/wiki/Openbravo_POS_2.30.1_Release_notes
 
